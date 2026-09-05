@@ -42,3 +42,6 @@ It includes:
 
 ## Demo Video
 [Insert Link to 2-3 minute YouTube/Loom Video Here]
+
+## Note
+This project relies on the gemini-1.5-pro model for reasoning.
