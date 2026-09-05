@@ -71,7 +71,7 @@ async def startup_event():
         except Exception as e:
             print(f"Warning: Failed to index: {e}")
     else:
-        print("GEMINI_API_KEY not found. Analysis will fail.")
+        print("GEMINI_API_KEY not found. App running in OFFLINE DEMO MODE for video recording.")
 
 # 4. API Endpoints
 class AnalyzeRequest(BaseModel):
@@ -104,9 +104,39 @@ async def get_inbox():
 
 @app.post("/api/analyze")
 async def analyze_disruption(req: AnalyzeRequest):
-    if not os.environ.get("GEMINI_API_KEY"):
-        raise HTTPException(status_code=500, detail="GEMINI_API_KEY not set. Please set the environment variable.")
-        
+    api_key = os.environ.get("GEMINI_API_KEY")
+    
+    # --- OFFLINE DEMO MODE (Bypasses API Key for video recording) ---
+    if not api_key:
+        text = req.disruption_notice.lower()
+        if "apex" in text or "sh1001" in text:
+            return {
+                "has_impact": True,
+                "summary": "Shipment SH1001 (500 units of P01) is delayed by 3 weeks. This creates a critical stock shortage.",
+                "affected_orders": [
+                    {
+                        "order_id": "ORD-501",
+                        "customer": "MegaBuild Systems",
+                        "urgency": "High",
+                        "impact_details": "Requires 100 units of P01. Current warehouse stock is only 50 units. Order will slip.",
+                        "options": [
+                            {"action": "Reallocate Buffer Stock", "trade_offs": "Fulfills 50% immediately, depletes safety stock."},
+                            {"action": "Part-Ship Available Units", "trade_offs": "Customer gets 50 now, 50 later. Higher shipping cost."},
+                            {"action": "Inform Customer of Delay", "trade_offs": "Zero cost, but high risk of dissatisfaction."}
+                        ]
+                    }
+                ],
+                "recommended_course": "Reallocate the 50 units from warehouse stock to ORD-501 immediately and part-ship to maintain client trust. Inform them the rest will arrive in 3 weeks."
+            }
+        else:
+            return {
+                "has_impact": False,
+                "summary": "Shipment SH1003 is delayed by 4 days, but warehouse buffer stock is sufficient.",
+                "affected_orders": [],
+                "recommended_course": "No immediate action required. Monitor SH1003 ETA. Buffer stock covers pending orders."
+            }
+            
+    # --- REAL AI MODE ---
     try:
         relevant_docs = vector_store.search(req.disruption_notice, top_k=3)
         retrieved_context = "\n".join(relevant_docs)

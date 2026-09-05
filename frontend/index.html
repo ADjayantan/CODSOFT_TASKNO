@@ -6,139 +6,186 @@
     <title>Supply Chain Operations Center</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: { sans: ['Inter', 'sans-serif'] },
+                    colors: { brand: { 500: '#3b82f6', 600: '#2563eb' } }
+                }
+            }
+        }
+    </script>
+    <style>
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #475569; border-radius: 4px; }
+    </style>
 </head>
-<body class="bg-slate-100 font-sans text-slate-800 min-h-screen">
+<body class="bg-[#0f172a] font-sans text-slate-300 min-h-screen selection:bg-blue-500/30">
     
     <!-- Navbar -->
-    <nav class="bg-blue-900 text-white p-4 shadow-md">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <h1 class="text-2xl font-bold"><i class="fas fa-network-wired mr-2"></i> NexusTiq24 Operations Center</h1>
-            <span class="text-blue-200 text-sm">System Status: <span class="text-green-400 font-bold">Online</span></span>
+    <nav class="glass border-b border-slate-800 sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <div class="h-8 w-8 rounded-lg bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center text-white font-bold shadow-lg shadow-blue-500/20">
+                    <i class="fas fa-network-wired text-sm"></i>
+                </div>
+                <h1 class="text-xl font-bold text-white tracking-tight">Nexus<span class="text-blue-400">Tiq24</span> <span class="font-normal text-slate-500">| Ops Center</span></h1>
+            </div>
+            <div class="flex items-center gap-2 bg-slate-800/80 px-3 py-1.5 rounded-full border border-slate-700">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span class="text-xs font-medium text-slate-300">System Online</span>
+            </div>
         </div>
     </nav>
 
-    <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-3 gap-6 mt-4">
+    <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 mt-2">
         
         <!-- Left Column: Database Status -->
-        <div class="lg:col-span-1 space-y-6">
-            <!-- Warehouse Stock Widget -->
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                <h2 class="text-lg font-bold text-slate-700 mb-4 border-b pb-2"><i class="fas fa-warehouse mr-2"></i> Live Warehouse Stock</h2>
-                <div id="stock-container" class="space-y-4">
-                    <p class="text-sm text-slate-500 animate-pulse">Loading database...</p>
+        <div class="lg:col-span-4 space-y-6">
+            <!-- Warehouse Stock -->
+            <div class="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5 shadow-xl">
+                <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <i class="fas fa-warehouse text-blue-400"></i> Live Stock Levels
+                </h2>
+                <div id="stock-container" class="space-y-5 custom-scrollbar max-h-[300px] overflow-y-auto pr-2">
+                    <div class="animate-pulse flex space-x-4"><div class="flex-1 space-y-3 py-1"><div class="h-2 bg-slate-700 rounded"></div><div class="h-2 bg-slate-700 rounded w-5/6"></div></div></div>
                 </div>
             </div>
             
-            <!-- Pending Orders Widget -->
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                <h2 class="text-lg font-bold text-slate-700 mb-4 border-b pb-2"><i class="fas fa-shopping-cart mr-2"></i> Pending Orders</h2>
-                <div id="orders-container" class="space-y-3"></div>
+            <!-- Pending Orders -->
+            <div class="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-5 shadow-xl">
+                <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                    <i class="fas fa-shopping-cart text-purple-400"></i> Active Orders
+                </h2>
+                <div id="orders-container" class="space-y-3 custom-scrollbar max-h-[300px] overflow-y-auto pr-2"></div>
             </div>
         </div>
 
-        <!-- Right Column: Inbox & AI Analysis -->
-        <div class="lg:col-span-2 space-y-6">
+        <!-- Right Column: Inbox & AI -->
+        <div class="lg:col-span-8 space-y-6">
             
             <!-- Automated Alert Inbox -->
-            <div class="bg-white rounded-xl shadow-sm border border-slate-200 p-5">
-                <div class="flex justify-between items-center mb-4 border-b pb-2">
-                    <h2 class="text-lg font-bold text-slate-700"><i class="fas fa-inbox mr-2"></i> Incoming Supplier Notices</h2>
-                    <span class="bg-red-100 text-red-800 text-xs font-bold px-2 py-1 rounded-full">2 Unread</span>
+            <div class="bg-slate-800/50 border border-slate-700/50 rounded-2xl p-1 shadow-xl">
+                <div class="px-5 pt-5 pb-3 flex justify-between items-center border-b border-slate-700/50">
+                    <h2 class="text-sm font-semibold text-slate-400 uppercase tracking-wider flex items-center gap-2">
+                        <i class="fas fa-inbox text-rose-400"></i> Incoming Disruption Alerts
+                    </h2>
+                    <span class="bg-rose-500/10 text-rose-400 border border-rose-500/20 text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1">
+                        <i class="fas fa-bell text-[10px]"></i> 2 New
+                    </span>
                 </div>
-                
-                <div id="inbox-container" class="space-y-3">
-                    <p class="text-sm text-slate-500 animate-pulse">Syncing inbox...</p>
-                </div>
+                <div id="inbox-container" class="p-4 space-y-3"></div>
             </div>
 
             <!-- AI Impact Assessment Panel -->
-            <div id="analysis-panel" class="hidden bg-white rounded-xl shadow-md border-l-4 border-blue-600 p-6">
-                <div class="flex justify-between items-start mb-4">
-                    <h2 class="text-2xl font-bold text-slate-800"><i class="fas fa-robot text-blue-600 mr-2"></i> AI Impact Assessment</h2>
-                    <div id="loading" class="hidden text-blue-600 font-semibold animate-pulse"><i class="fas fa-spinner fa-spin mr-1"></i> Analyzing Network...</div>
+            <div id="analysis-panel" class="hidden bg-gradient-to-b from-slate-800 to-slate-800/40 border border-blue-500/30 rounded-2xl p-6 shadow-[0_0_30px_rgba(59,130,246,0.1)] relative overflow-hidden">
+                <!-- Decorative glow -->
+                <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-blue-500 via-indigo-500 to-purple-500"></div>
+                
+                <div class="flex justify-between items-center mb-6">
+                    <div class="flex items-center gap-3">
+                        <div class="h-10 w-10 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center">
+                            <i class="fas fa-robot text-blue-400 text-lg"></i>
+                        </div>
+                        <h2 class="text-xl font-bold text-white">AI Impact Assessment</h2>
+                    </div>
+                    <div id="loading" class="hidden text-blue-400 text-sm font-medium bg-blue-500/10 px-3 py-1.5 rounded-full border border-blue-500/20">
+                        <i class="fas fa-circle-notch fa-spin mr-2"></i>Analyzing network...
+                    </div>
                 </div>
                 
-                <div id="results" class="hidden">
-                    <div id="summary" class="mb-6 text-lg p-4 bg-slate-50 rounded-lg border border-slate-100"></div>
+                <div id="results" class="hidden space-y-6">
+                    <!-- Summary -->
+                    <div id="summary" class="p-4 bg-slate-900/50 rounded-xl border border-slate-700/50 text-slate-300 leading-relaxed text-sm"></div>
                     
-                    <h3 class="text-lg font-bold mb-3 text-slate-700">Affected Orders</h3>
-                    <div id="affected-orders" class="space-y-4 mb-6"></div>
+                    <!-- Orders -->
+                    <div>
+                        <h3 class="text-sm font-semibold text-slate-400 uppercase tracking-wider mb-3">Affected Orders Analysis</h3>
+                        <div id="affected-orders" class="space-y-3"></div>
+                    </div>
                     
-                    <div class="p-4 bg-blue-50 rounded-lg border border-blue-200">
-                        <h3 class="text-lg font-bold text-blue-900 mb-2"><i class="fas fa-lightbulb mr-2"></i> AI Recommended Action</h3>
-                        <p id="recommendation" class="text-blue-800 leading-relaxed font-medium"></p>
+                    <!-- Recommendation -->
+                    <div class="p-5 bg-gradient-to-r from-blue-900/40 to-indigo-900/40 rounded-xl border border-blue-500/30 relative overflow-hidden">
+                        <i class="fas fa-lightbulb absolute right-4 top-4 text-4xl text-blue-500/10"></i>
+                        <h3 class="text-sm font-semibold text-blue-300 uppercase tracking-wider mb-2 flex items-center gap-2">
+                            <i class="fas fa-wand-magic-sparkles"></i> Recommended Action
+                        </h3>
+                        <p id="recommendation" class="text-blue-100/90 text-sm leading-relaxed"></p>
                     </div>
                 </div>
             </div>
-
         </div>
     </div>
 
     <script>
-        // Load Database Overview on Startup
         async function loadDatabase() {
             try {
                 const res = await fetch('/api/database');
                 const db = await res.json();
                 
-                // Render Stock
-                const stockHtml = db.stock.map(item => `
-                    <div>
-                        <div class="flex justify-between text-sm font-semibold text-slate-600 mb-1">
-                            <span>${item.name} (${item.part_id})</span>
-                            <span>${item.quantity_in_warehouse} Units</span>
+                document.getElementById('stock-container').innerHTML = db.stock.map(item => {
+                    const pct = Math.min((item.quantity_in_warehouse/500)*100, 100);
+                    let color = pct > 20 ? 'from-emerald-400 to-teal-500' : 'from-rose-400 to-red-500';
+                    return `
+                    <div class="group">
+                        <div class="flex justify-between text-xs font-medium text-slate-400 mb-2">
+                            <span class="group-hover:text-slate-200 transition-colors">${item.name} <span class="text-slate-600 ml-1">#${item.part_id}</span></span>
+                            <span class="text-slate-200 font-bold bg-slate-700/50 px-2 py-0.5 rounded">${item.quantity_in_warehouse}</span>
                         </div>
-                        <div class="w-full bg-slate-200 rounded-full h-2">
-                            <div class="bg-blue-600 h-2 rounded-full" style="width: ${Math.min((item.quantity_in_warehouse/500)*100, 100)}%"></div>
+                        <div class="w-full bg-slate-900/80 rounded-full h-1.5 overflow-hidden">
+                            <div class="h-full rounded-full bg-gradient-to-r ${color} shadow-[0_0_10px_rgba(0,0,0,0.5)]" style="width: ${pct}%"></div>
                         </div>
                     </div>
-                `).join('');
-                document.getElementById('stock-container').innerHTML = stockHtml;
+                `}).join('');
 
-                // Render Orders
-                const ordersHtml = db.orders.map(order => `
-                    <div class="p-3 bg-slate-50 border border-slate-100 rounded-lg">
+                document.getElementById('orders-container').innerHTML = db.orders.map(order => `
+                    <div class="p-3 bg-slate-900/40 border border-slate-700/50 rounded-xl hover:bg-slate-700/40 transition-colors">
                         <div class="flex justify-between items-center mb-1">
-                            <span class="font-bold text-sm text-slate-800">${order.order_id}</span>
-                            <span class="text-xs text-slate-500"><i class="far fa-calendar-alt"></i> ${order.deadline}</span>
+                            <span class="font-bold text-sm text-slate-200">${order.order_id}</span>
+                            <span class="text-[10px] text-slate-400 bg-slate-800 px-2 py-1 rounded-md border border-slate-700"><i class="far fa-calendar-alt text-blue-400 mr-1"></i> ${order.deadline}</span>
                         </div>
-                        <div class="text-xs text-slate-600">${order.customer}</div>
+                        <div class="text-xs text-slate-400 mt-2 flex items-center gap-1.5">
+                            <div class="h-5 w-5 rounded-full bg-slate-700 flex items-center justify-center text-[8px] text-white">${order.customer.charAt(0)}</div>
+                            ${order.customer}
+                        </div>
                     </div>
                 `).join('');
-                document.getElementById('orders-container').innerHTML = ordersHtml;
-                
             } catch (e) {
-                document.getElementById('stock-container').innerHTML = '<span class="text-red-500 text-sm">Failed to load database</span>';
+                document.getElementById('stock-container').innerHTML = '<span class="text-rose-500 text-sm">Failed to load database</span>';
             }
         }
 
-        // Load Inbox
         async function loadInbox() {
             try {
                 const res = await fetch('/api/inbox');
                 const emails = await res.json();
                 
-                const inboxHtml = emails.map(email => `
-                    <div class="group border border-slate-200 p-4 rounded-lg hover:border-blue-400 hover:bg-blue-50 transition-colors cursor-pointer" onclick="analyzeNotice('${email.body.replace(/'/g, "\\'")}')">
+                document.getElementById('inbox-container').innerHTML = emails.map(email => `
+                    <div class="group bg-slate-900/40 border border-slate-700/60 p-4 rounded-xl hover:border-blue-500/50 hover:bg-slate-800/80 transition-all duration-300 shadow-sm hover:shadow-[0_4px_20px_rgba(59,130,246,0.1)]">
                         <div class="flex justify-between items-start mb-2">
-                            <span class="font-bold text-slate-800 text-sm"><i class="fas fa-envelope text-slate-400 mr-2"></i>${email.sender}</span>
-                            <span class="text-xs text-slate-500">${email.date}</span>
+                            <span class="font-bold text-slate-200 text-sm flex items-center gap-2">
+                                <div class="h-6 w-6 rounded bg-slate-700 flex items-center justify-center text-xs text-slate-300"><i class="fas fa-building"></i></div>
+                                ${email.sender}
+                            </span>
+                            <span class="text-[10px] text-slate-500 font-medium">${email.date}</span>
                         </div>
-                        <h4 class="font-bold text-slate-700 text-sm mb-1">${email.subject}</h4>
-                        <p class="text-slate-500 text-xs truncate mb-3">${email.body}</p>
-                        <button class="text-xs bg-blue-100 text-blue-700 font-bold py-1 px-3 rounded hover:bg-blue-200 transition-colors">
-                            <i class="fas fa-bolt mr-1"></i> Auto-Analyze
+                        <h4 class="font-medium text-slate-300 text-sm mb-2 mt-3">${email.subject}</h4>
+                        <p class="text-slate-400 text-xs line-clamp-2 mb-4 leading-relaxed">${email.body}</p>
+                        <button onclick="analyzeNotice('${email.body.replace(/'/g, "\\'")}')" class="w-full sm:w-auto text-xs bg-blue-600/10 hover:bg-blue-600 border border-blue-500/30 hover:border-blue-500 text-blue-400 hover:text-white font-medium py-1.5 px-4 rounded-lg transition-all duration-300 flex items-center justify-center gap-2">
+                            <i class="fas fa-bolt"></i> Auto-Analyze Impact
                         </button>
                     </div>
                 `).join('');
-                document.getElementById('inbox-container').innerHTML = inboxHtml;
-                
-            } catch (e) {
-                document.getElementById('inbox-container').innerHTML = '<span class="text-red-500 text-sm">Failed to load inbox</span>';
-            }
+            } catch (e) {}
         }
 
-        // Analyze specific notice
         async function analyzeNotice(noticeText) {
             const panel = document.getElementById('analysis-panel');
             const loading = document.getElementById('loading');
@@ -148,76 +195,67 @@
             loading.classList.remove('hidden');
             results.classList.add('hidden');
             
-            // Scroll to panel
-            panel.scrollIntoView({ behavior: 'smooth' });
+            panel.scrollIntoView({ behavior: 'smooth', block: 'center' });
             
-            try {
-                const res = await fetch('/api/analyze', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({ disruption_notice: noticeText })
-                });
-                
-                const data = await res.json();
-                
-                if (!res.ok) {
-                    throw new Error(data.detail || 'Server returned an error');
-                }
-                
-                document.getElementById('summary').innerHTML = `
-                    <span class="${data.has_impact ? 'text-red-600 font-bold' : 'text-green-600 font-bold'}">
-                        ${data.has_impact ? '<i class="fas fa-exclamation-triangle"></i> CRITICAL IMPACT DETECTED' : '<i class="fas fa-check-circle"></i> NO DISRUPTION DETECTED'}
-                    </span><br><span class="text-sm mt-1 inline-block text-slate-600">${data.summary}</span>
-                `;
-                
-                const ordersDiv = document.getElementById('affected-orders');
-                ordersDiv.innerHTML = '';
-                
-                if (data.affected_orders && data.affected_orders.length > 0) {
-                    data.affected_orders.forEach(order => {
-                        let optionsHtml = order.options.map(opt => `
-                            <div class="mb-2 bg-white p-2 border border-slate-200 rounded">
-                                <span class="font-bold text-sm text-slate-700"><i class="fas fa-arrow-right text-blue-500 mr-1"></i> ${opt.action}</span><br>
-                                <span class="text-xs text-slate-500 italic ml-4">Trade-off: ${opt.trade_offs}</span>
-                            </div>
-                        `).join('');
-                        
-                        let urgencyClass = order.urgency.toLowerCase() === 'high' ? 'bg-red-100 text-red-800 border-red-200' : 'bg-yellow-100 text-yellow-800 border-yellow-200';
-                        
-                        ordersDiv.innerHTML += `
-                            <div class="border p-4 rounded-lg bg-slate-50 shadow-sm">
-                                <div class="flex justify-between items-center mb-3 border-b border-slate-200 pb-2">
-                                    <span class="font-bold text-slate-800"><i class="fas fa-box text-slate-400 mr-2"></i>${order.order_id} - ${order.customer}</span>
-                                    <span class="px-2 py-1 rounded text-xs font-bold uppercase border ${urgencyClass}">${order.urgency} Priority</span>
-                                </div>
-                                <p class="mb-4 text-slate-700 text-sm leading-relaxed">${order.impact_details}</p>
-                                <h4 class="font-bold text-xs text-slate-500 uppercase tracking-wide mb-2">Available Options</h4>
-                                ${optionsHtml}
-                            </div>
-                        `;
+            setTimeout(async () => {
+                try {
+                    const res = await fetch('/api/analyze', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({ disruption_notice: noticeText })
                     });
-                } else {
-                    ordersDiv.innerHTML = '<div class="p-4 border border-green-200 rounded-lg bg-green-50 text-green-700 font-medium"><i class="fas fa-shield-alt mr-2"></i> All customer orders are safe. Buffer stock is sufficient.</div>';
+                    
+                    const data = await res.json();
+                    
+                    let statusBadge = data.has_impact 
+                        ? '<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-rose-500/10 text-rose-400 border border-rose-500/20"><i class="fas fa-exclamation-triangle"></i> CRITICAL IMPACT</span>'
+                        : '<span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-emerald-500/10 text-emerald-400 border border-emerald-500/20"><i class="fas fa-check-circle"></i> SYSTEM SAFE</span>';
+                    
+                    document.getElementById('summary').innerHTML = `${statusBadge}<p class="mt-3">${data.summary}</p>`;
+                    
+                    const ordersDiv = document.getElementById('affected-orders');
+                    
+                    if (data.affected_orders && data.affected_orders.length > 0) {
+                        ordersDiv.innerHTML = data.affected_orders.map(order => {
+                            let optionsHtml = order.options.map(opt => `
+                                <div class="mb-2 bg-slate-900/60 p-3 border border-slate-700/50 rounded-lg">
+                                    <span class="font-medium text-sm text-slate-200"><i class="fas fa-arrow-right text-blue-400 mr-2 text-xs"></i>${opt.action}</span>
+                                    <p class="text-[11px] text-slate-400 mt-1 pl-5">Trade-off: ${opt.trade_offs}</p>
+                                </div>
+                            `).join('');
+                            
+                            let badgeColor = order.urgency.toLowerCase() === 'high' ? 'bg-rose-500 text-white' : 'bg-amber-500 text-white';
+                            
+                            return `
+                                <div class="border border-slate-700/50 rounded-xl bg-slate-800/30 overflow-hidden">
+                                    <div class="flex justify-between items-center p-3 bg-slate-800/80 border-b border-slate-700/50">
+                                        <span class="font-bold text-slate-200 text-sm flex items-center gap-2"><i class="fas fa-box text-slate-500"></i>${order.order_id} <span class="font-normal text-slate-400 text-xs hidden sm:inline">| ${order.customer}</span></span>
+                                        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${badgeColor} shadow-lg">${order.urgency} Priority</span>
+                                    </div>
+                                    <div class="p-4">
+                                        <p class="mb-4 text-slate-300 text-xs leading-relaxed border-l-2 border-slate-600 pl-3">${order.impact_details}</p>
+                                        <h4 class="font-semibold text-[10px] text-slate-500 uppercase tracking-widest mb-3">Resolution Options</h4>
+                                        ${optionsHtml}
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
+                    } else {
+                        ordersDiv.innerHTML = '<div class="p-4 border border-emerald-500/20 rounded-xl bg-emerald-500/5 flex items-center gap-3 text-emerald-400/90 text-sm font-medium"><i class="fas fa-shield-alt text-xl"></i> All customer orders are safe. Buffer stock covers the delay.</div>';
+                    }
+                    
+                    document.getElementById('recommendation').innerText = data.recommended_course;
+                    results.classList.remove('hidden');
+                } catch (e) {
+                    console.error(e);
+                } finally {
+                    loading.classList.add('hidden');
                 }
-                
-                document.getElementById('recommendation').innerText = data.recommended_course;
-                results.classList.remove('hidden');
-            } catch (e) {
-                console.error(e);
-                document.getElementById('summary').innerHTML = '<span class="text-red-600 font-bold"><i class="fas fa-times-circle mr-2"></i>System Error</span>';
-                document.getElementById('affected-orders').innerHTML = `<div class="p-4 bg-red-50 text-red-700 rounded border border-red-200 text-sm font-mono break-all">${e.message}</div>`;
-                document.getElementById('recommendation').innerText = 'Please ensure your Google AI Studio GEMINI_API_KEY is correctly set in the environment.';
-                results.classList.remove('hidden');
-            } finally {
-                loading.classList.add('hidden');
-            }
+            }, 600); // Slight delay for realistic UI loading effect
         }
 
-        // Init
         loadDatabase();
         loadInbox();
     </script>
 </body>
 </html>
-
-<!-- End of Operations Dashboard -->
