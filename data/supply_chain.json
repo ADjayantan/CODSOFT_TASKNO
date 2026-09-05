@@ -1,0 +1,22 @@
+{
+  "suppliers": [
+    {"id": "S01", "name": "Apex Electronics", "contact": "apex@example.com", "supplies": ["P01"]},
+    {"id": "S02", "name": "Global Screens", "contact": "gscreens@example.com", "supplies": ["P02"]},
+    {"id": "S03", "name": "MechParts Inc", "contact": "mech@example.com", "supplies": ["P03"]}
+  ],
+  "stock": [
+    {"part_id": "P01", "name": "High-End Microchip", "quantity_in_warehouse": 50},
+    {"part_id": "P02", "name": "OLED Display", "quantity_in_warehouse": 20},
+    {"part_id": "P03", "name": "Aluminum Chassis", "quantity_in_warehouse": 200}
+  ],
+  "shipments": [
+    {"shipment_id": "SH1001", "supplier_id": "S01", "part_id": "P01", "quantity": 500, "eta": "2024-11-15"},
+    {"shipment_id": "SH1002", "supplier_id": "S02", "part_id": "P02", "quantity": 100, "eta": "2024-11-10"},
+    {"shipment_id": "SH1003", "supplier_id": "S03", "part_id": "P03", "quantity": 1000, "eta": "2024-11-12"}
+  ],
+  "orders": [
+    {"order_id": "ORD-501", "customer": "MegaBuild Systems", "required_parts": [{"part_id": "P01", "quantity": 100}, {"part_id": "P02", "quantity": 100}], "deadline": "2024-11-20"},
+    {"order_id": "ORD-502", "customer": "TechNova", "required_parts": [{"part_id": "P01", "quantity": 20}], "deadline": "2024-11-18"},
+    {"order_id": "ORD-503", "customer": "Alpha Robotics", "required_parts": [{"part_id": "P03", "quantity": 150}], "deadline": "2024-11-25"}
+  ]
+}
